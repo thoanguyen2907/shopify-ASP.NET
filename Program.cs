@@ -1,3 +1,15 @@
+using Shopify.src.Database;
+using Shopify.src.Entity;
+using AutoMapper;
+using Npgsql;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Models;
+using Shopify.src.Shared;
+using Shopify.src.Service;
+using Shopify.src.Service.Impl;
+using Shopify.src.Abstraction;
+using Shopify.src.Repository;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -21,6 +33,18 @@ builder.Services.AddDbContext<DatabaseContext>(options =>
 );
 // add automapper service
 builder.Services.AddAutoMapper(typeof(MapperProfile).Assembly);
+
+// add DI services
+
+
+builder.Services
+    .AddScoped<IUserService, UserService>();
+
+
+builder.Services
+    .AddScoped<IBaseRepo<User>, UserRepo>();
+
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -35,7 +59,9 @@ app.UseHttpsRedirection();
 
 
  
-
+// Add middlewares
+app.UseHttpsRedirection();
+app.MapControllers();
 app.Run();
 
 
