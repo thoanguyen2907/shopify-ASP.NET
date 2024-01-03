@@ -62,7 +62,7 @@ namespace Shopify.src.Service.Impl
             {
                 return false;
             }
-            _mapper.Map(updateDto, foundItem);
+    
             return await _userRepo.UpdateOneAsync(foundItem);
         }
     }

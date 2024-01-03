@@ -16,6 +16,11 @@ namespace Shopify.src.Shared
             CreateMap<UserCreateDto, User>();
             CreateMap<UserUpdateDto, User>()
            .ForAllMembers(opts => opts.Condition((src, dest, srcProperty) => srcProperty != null));
+
+            CreateMap<Category, CategoryReadDto>();
+            CreateMap<CategoryCreateDto, Category>();
+            CreateMap<CategoryUpdateDto, Category>()
+                       .ForAllMembers(opts => opts.Condition((src, dest, srcProperty) => srcProperty != null)); ;
         }
     }
 }
