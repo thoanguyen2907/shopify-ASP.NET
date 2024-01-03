@@ -7,6 +7,6 @@ namespace Shopify.src.Entity
 {
     public class BaseEntity : TimeStamp
     {
-        public Guid Id {get; set;} 
+        public Guid Id { get; set; }
     }
 }

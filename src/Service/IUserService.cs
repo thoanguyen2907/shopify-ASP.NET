@@ -9,10 +9,10 @@ namespace Shopify.src.Service
 {
     public interface IUserService
     {
-        Task<UserReadDto> CreateOneAsync(UserCreateDto createDto); 
-        Task<bool> DeleteOneAsync(Guid id); 
+        Task<UserReadDto> CreateOneAsync(UserCreateDto createDto);
+        Task<bool> DeleteOneAsync(Guid id);
         Task<IEnumerable<UserReadDto>> GetAllAsync(GetAllOptions getAllOptions);
         Task<UserReadDto> GetByIdAsync(Guid id);
-        Task<bool> UpdateOneAsync(Guid id, UserUpdateDto updateDto);  
+        Task<bool> UpdateOneAsync(Guid id, UserUpdateDto updateDto);
     }
 }

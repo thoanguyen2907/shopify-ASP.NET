@@ -50,31 +50,19 @@ namespace Shopify.src.Service.Impl
             var foundUser = await _userRepo.GetByIdAsync(id);
             if (foundUser is null)
             {
-                throw new Exception("user is not found");
+                throw CustomException.NotFound($"User with {id} is not found");
             }
             return _mapper.Map<User, UserReadDto>(foundUser);
         }
 
         public async Task<bool> UpdateOneAsync(Guid id, UserUpdateDto updateDto)
         {
-            var foundItem = await _userRepo.GetByIdAsync(id) ?? throw new Exception("User is not found");
-            Console.WriteLine(foundItem);
-            // var properties = updateDto!.GetType().GetProperties(); 
-            // foreach (var p in properties)
-            // {
-            //     if (p.GetValue(foundItem) is not null && p.GetValue(updateDto) is null)
-            //     {
-            //         p.SetValue(updateDto, p.GetValue(foundItem));
-            //     }
-            // }
+            var foundItem = await _userRepo.GetByIdAsync(id) ?? throw CustomException.NotFound($"User with {id} is not found");
             if (foundItem == null)
             {
                 return false;
             }
-
-           //  var user = _mapper.Map<UserUpdateDto, User>(updateDto);
             _mapper.Map(updateDto, foundItem);
-
             return await _userRepo.UpdateOneAsync(foundItem);
         }
     }

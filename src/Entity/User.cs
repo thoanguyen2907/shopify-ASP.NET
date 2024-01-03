@@ -10,17 +10,17 @@ namespace Shopify.src.Entity
     public class User : BaseEntity
     {
         [Required]
-        public string Name {get; set;}
+        public string Name { get; set; }
         [Required]
-        public string Email {get; set;}
+        public string Email { get; set; }
         [EmailAddress]
-        public string Password {get; set;}
-        public Role Role {get; set;}
+        public string Password { get; set; }
+        public Role Role { get; set; }
     }
     [JsonConverter(typeof(JsonStringEnumConverter))]
-    public enum Role 
+    public enum Role
     {
-        Admin, 
+        Admin,
         Customer
     }
 }

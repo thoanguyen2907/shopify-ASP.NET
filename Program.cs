@@ -36,15 +36,11 @@ builder.Services.AddAutoMapper(typeof(MapperProfile).Assembly);
 
 // add DI services
 
-
 builder.Services
-    .AddScoped<IUserService, UserService>();
-
-
-builder.Services
+    .AddScoped<IUserService, UserService>()
     .AddScoped<IBaseRepo<User>, UserRepo>();
 
-
+// app build 
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -58,7 +54,7 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 
- 
+
 // Add middlewares
 app.UseHttpsRedirection();
 app.MapControllers();

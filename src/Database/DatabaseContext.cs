@@ -9,8 +9,8 @@ namespace Shopify.src.Database
 {
     public class DatabaseContext : DbContext
     {
-        private IConfiguration _config; 
-        public DbSet<User> Users {get; set;}
+        private IConfiguration _config;
+        public DbSet<User> Users { get; set; }
 
         static DatabaseContext()
         {
@@ -21,16 +21,16 @@ namespace Shopify.src.Database
         {
             _config = config;
         }
-          protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {    
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
             optionsBuilder
             .EnableSensitiveDataLogging()
             .EnableDetailedErrors()
-            .UseSnakeCaseNamingConvention(); 
+            .UseSnakeCaseNamingConvention();
         }
-          protected override void OnModelCreating(ModelBuilder modelBuilder)
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-             modelBuilder.HasPostgresEnum<Role>();
+            modelBuilder.HasPostgresEnum<Role>();
         }
     }
 }

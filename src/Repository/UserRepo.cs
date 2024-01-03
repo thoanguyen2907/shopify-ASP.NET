@@ -13,17 +13,17 @@ namespace Shopify.src.Repository
 {
     public class UserRepo : IBaseRepo<User>
     {
-        protected readonly DbSet<User> _users; 
-        protected readonly DatabaseContext _databaseContext; 
-         public UserRepo(DatabaseContext databaseContext)
+        protected readonly DbSet<User> _users;
+        protected readonly DatabaseContext _databaseContext;
+        public UserRepo(DatabaseContext databaseContext)
         {
             _databaseContext = databaseContext;
             _users = _databaseContext.Set<User>();
         }
         public async Task<User> CreateOneAsync(User createObject)
         {
-            await _users.AddAsync(createObject); 
-            await _databaseContext.SaveChangesAsync(); 
+            await _users.AddAsync(createObject);
+            await _databaseContext.SaveChangesAsync();
             return createObject;
         }
 
@@ -31,26 +31,24 @@ namespace Shopify.src.Repository
         {
             _users.Remove(deleteObject);
             await _databaseContext.SaveChangesAsync();
-            return true; 
+            return true;
         }
 
         public async Task<IEnumerable<User>> GetAllAsync(GetAllOptions getAllOptions)
         {
-          return await _users.Skip(getAllOptions.Offset).Take(getAllOptions.Limit).ToArrayAsync();
+            return await _users.Skip(getAllOptions.Offset).Take(getAllOptions.Limit).ToArrayAsync();
         }
 
         public async Task<User?> GetByIdAsync(Guid id)
         {
-           return await _users.FindAsync(id);
+            return await _users.FindAsync(id);
         }
 
         public async Task<bool> UpdateOneAsync(User updateObject)
         {
-            Console.WriteLine("update object in user repo");
-    
-           _users.Update(updateObject);
-           await _databaseContext.SaveChangesAsync();
-           return true;
+            _users.Update(updateObject);
+            await _databaseContext.SaveChangesAsync();
+            return true;
         }
     }
 }

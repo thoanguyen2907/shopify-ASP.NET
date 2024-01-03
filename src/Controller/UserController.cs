@@ -9,13 +9,13 @@ using Shopify.src.Shared;
 
 namespace Shopify.src.Controller
 {
-  
+
     public class UserController : BaseController
     {
-        protected readonly IUserService _userService; 
+        protected readonly IUserService _userService;
         public UserController(IUserService userService)
         {
-            _userService = userService; 
+            _userService = userService;
         }
         [HttpPost()]
         public async Task<ActionResult<UserReadDto>> CreateOneAsync([FromBody] UserCreateDto userCreateDto)
@@ -41,11 +41,11 @@ namespace Shopify.src.Controller
             var deleted = await _userService.DeleteOneAsync(id);
             return Ok(deleted);
         }
-        [HttpPut("{id:guid}")]
+        [HttpPatch("{id:guid}")]
         public async Task<ActionResult<bool>> UpdateOneAsync([FromRoute] Guid id, [FromBody] UserUpdateDto updateDto)
         {
             var updated = await _userService.UpdateOneAsync(id, updateDto);
-            return Ok(updated); 
+            return Ok(updated);
         }
     }
 }

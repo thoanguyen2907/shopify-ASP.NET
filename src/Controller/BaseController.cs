@@ -10,6 +10,6 @@ namespace Shopify.src.Controller
     [Route("api/v1/[controller]s")]
     public class BaseController : ControllerBase
     {
-        
+
     }
 }
