@@ -57,10 +57,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-
 app.UseHttpsRedirection();
-
-
 
 // Add middlewares
 app.UseHttpsRedirection();

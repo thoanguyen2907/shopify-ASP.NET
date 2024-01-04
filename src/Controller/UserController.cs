@@ -16,18 +16,21 @@ namespace Shopify.src.Controller
         {
             _userService = userService;
         }
+
         [HttpPost()]
         public async Task<ActionResult<UserReadDto>> CreateOneAsync([FromBody] UserCreateDto userCreateDto)
         {
             var user = await _userService.CreateOneAsync(userCreateDto);
             return Ok(user);
         }
+
         [HttpGet()]
         public async Task<ActionResult<IEnumerable<UserReadDto>>> GetAllAsync([FromQuery] GetAllOptions getAllOptions)
         {
             var userList = await _userService.GetAllAsync(getAllOptions);
             return Ok(userList);
         }
+
         [HttpGet("{id:guid}")]
         public async Task<ActionResult<UserReadDto>> GetByIdAsync([FromRoute] Guid id)
         {
@@ -41,6 +44,7 @@ namespace Shopify.src.Controller
             var deleted = await _userService.DeleteOneAsync(id);
             return Ok(deleted);
         }
+
         [HttpPatch("{id:guid}")]
         public async Task<ActionResult<bool>> UpdateOneAsync([FromRoute] Guid id, [FromBody] UserUpdateDto updateDto)
         {

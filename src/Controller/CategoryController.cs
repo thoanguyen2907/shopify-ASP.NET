@@ -16,30 +16,35 @@ namespace Shopify.src.Controller
         {
             _categoryService = service;
         }
+
         [HttpPost()]
         public async Task<ActionResult<CategoryReadDto>> CreateOneAsync([FromBody] CategoryCreateDto createDto)
         {
             var categoryCreated = await _categoryService.CreateOneAsync(createDto);
             return Ok(categoryCreated);
         }
+
         [HttpGet]
         public async Task<ActionResult<IEnumerable<CategoryReadDto>>> GetAllAsync([FromQuery] GetAllOptions getAllOptions)
         {
             var categoryList = await _categoryService.GetAllAsync(getAllOptions);
             return Ok(categoryList);
         }
+
         [HttpGet("{id:guid}")]
         public async Task<ActionResult<CategoryReadDto>> GetByIdAsync([FromRoute] Guid id)
         {
             var category = await _categoryService.GetByIdAsync(id);
             return Ok(category);
         }
+
         [HttpPatch("{id:guid}")]
         public async Task<ActionResult<bool>> UpdateOneAsync([FromRoute] Guid id, [FromBody] CategoryUpdateDto updateDto)
         {
             var updated = await _categoryService.UpdateOneAsync(id, updateDto);
             return Ok(updated);
         }
+        
         [HttpDelete("{id:guid}")]
         public async Task<ActionResult<bool>> DeleteOneAsync([FromRoute] Guid id)
         {
