@@ -1,7 +1,7 @@
-Shopify/appsettings.json
-Shopify/appsettings.*.json
-Shopify/obj/
-Shopify/bin/
+appsettings.json
+appsettings.*.json
+obj/
+bin/
 
 .vscode/*
 !.vscode/settings.json
