@@ -9,7 +9,6 @@ using Shopify.src.Shared;
 
 namespace Shopify.src.Controller
 {
-
     public class UserController : BaseController
     {
         protected readonly IUserService _userService;
@@ -35,6 +34,7 @@ namespace Shopify.src.Controller
             var user = await _userService.GetByIdAsync(id);
             return Ok(user);
         }
+
         [HttpDelete("{id:guid}")]
         public async Task<ActionResult<bool>> DeleteOneAsync([FromRoute] Guid id)
         {

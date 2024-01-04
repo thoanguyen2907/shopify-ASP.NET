@@ -39,8 +39,10 @@ builder.Services.AddAutoMapper(typeof(MapperProfile).Assembly);
 builder.Services
     .AddScoped<IUserService, UserService>()
     .AddScoped<ICategoryService, CategoryService>()
+    .AddScoped<IProductService, ProductService>()
     .AddScoped<IBaseRepo<User>, UserRepo>()
     .AddScoped<IBaseRepo<Category>, CategoryRepo>();
+    .AddScoped<IBaseRepo<Product>, ProductRepo>();
 
 // app build 
 var app = builder.Build();
