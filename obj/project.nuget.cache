@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "dM4H4r67j5Mt4ZOmBbHJ11oAbzFQlgb42HjLOb6tppOKVpwe2vcNyjWBGyQA5kUafLbTDC0EU6lSGCs4bRXxFw==",
+  "dgSpecHash": "dpvBRULMqOZdDQGga3gdFpWtWQ+rnxNe7+KqVIn1JRyarE0qtmcl4pyEdwC/FetjXJkpzVLtGJow01k3m4Qlfg==",
   "success": true,
-  "projectFilePath": "/Users/thoanguyen/Documents/dotnet-fs-project/Shopify/Shopify.csproj",
+  "projectFilePath": "/Users/thoanguyen/Documents/fs-project-shopify/Shopify/Shopify.csproj",
   "expectedPackageFiles": [
     "/Users/thoanguyen/.nuget/packages/automapper/12.0.1/automapper.12.0.1.nupkg.sha512",
     "/Users/thoanguyen/.nuget/packages/automapper.extensions.microsoft.dependencyinjection/12.0.1/automapper.extensions.microsoft.dependencyinjection.12.0.1.nupkg.sha512",

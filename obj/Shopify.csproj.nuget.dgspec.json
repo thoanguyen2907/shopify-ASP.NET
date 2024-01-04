@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/Users/thoanguyen/Documents/dotnet-fs-project/Shopify/Shopify.csproj": {}
+    "/Users/thoanguyen/Documents/fs-project-shopify/Shopify/Shopify.csproj": {}
   },
   "projects": {
-    "/Users/thoanguyen/Documents/dotnet-fs-project/Shopify/Shopify.csproj": {
+    "/Users/thoanguyen/Documents/fs-project-shopify/Shopify/Shopify.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/thoanguyen/Documents/dotnet-fs-project/Shopify/Shopify.csproj",
+        "projectUniqueName": "/Users/thoanguyen/Documents/fs-project-shopify/Shopify/Shopify.csproj",
         "projectName": "Shopify",
-        "projectPath": "/Users/thoanguyen/Documents/dotnet-fs-project/Shopify/Shopify.csproj",
+        "projectPath": "/Users/thoanguyen/Documents/fs-project-shopify/Shopify/Shopify.csproj",
         "packagesPath": "/Users/thoanguyen/.nuget/packages/",
-        "outputPath": "/Users/thoanguyen/Documents/dotnet-fs-project/Shopify/obj/",
+        "outputPath": "/Users/thoanguyen/Documents/fs-project-shopify/Shopify/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/Users/thoanguyen/.nuget/NuGet/NuGet.Config"
