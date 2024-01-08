@@ -41,7 +41,7 @@ builder.Services
     .AddScoped<ICategoryService, CategoryService>()
     .AddScoped<IProductService, ProductService>()
     .AddScoped<IBaseRepo<User>, UserRepo>()
-    .AddScoped<IBaseRepo<Category>, CategoryRepo>();
+    .AddScoped<IBaseRepo<Category>, CategoryRepo>()
     .AddScoped<IBaseRepo<Product>, ProductRepo>();
 
 // app build 

@@ -11,9 +11,9 @@ namespace Shopify.src.Entity
     {
         [Required]
         public string Name { get; set; }
-        [Required]
+        [Required, EmailAddress]
         public string Email { get; set; }
-        [EmailAddress]
+        [Required]
         public string Password { get; set; }
         public Role Role { get; set; }
     }
