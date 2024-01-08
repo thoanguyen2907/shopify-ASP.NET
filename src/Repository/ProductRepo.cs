@@ -36,7 +36,7 @@ namespace Shopify.src.Repository
 
         public async Task<IEnumerable<Product>> GetAllAsync(GetAllOptions getAllOptions)
         {
-            return await _products.Skip(getAllOptions.Offset).Take(getAllOptions.Limit).ToArrayAsync();
+            return await _products.AsNoTracking().Skip(getAllOptions.Offset).Take(getAllOptions.Limit).ToArrayAsync();
         }
 
         public async Task<Product?> GetByIdAsync(Guid id)
