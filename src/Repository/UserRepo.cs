@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Shopify.src.Abstraction;
@@ -32,6 +33,12 @@ namespace Shopify.src.Repository
             _users.Remove(deleteObject);
             await _databaseContext.SaveChangesAsync();
             return true;
+        }
+
+        public async Task<User?> FindByEmailAsync(string email)
+        {
+            var user = await _users.FindAsync(email);
+            return user;
         }
 
         public async Task<IEnumerable<User>> GetAllAsync(GetAllOptions getAllOptions)
