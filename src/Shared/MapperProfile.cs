@@ -15,7 +15,7 @@ namespace Shopify.src.Shared
             CreateMap<User, UserReadDto>();
             CreateMap<UserCreateDto, User>();
             CreateMap<UserUpdateDto, User>()
-           .ForAllMembers(opts => opts.Condition((src, dest, srcProperty) => srcProperty != null));
+                       .ForAllMembers(opts => opts.Condition((src, dest, srcProperty) => srcProperty != null));
 
             CreateMap<Category, CategoryReadDto>();
             CreateMap<CategoryCreateDto, Category>();
@@ -25,8 +25,12 @@ namespace Shopify.src.Shared
             CreateMap<Product, ProductReadDto>();
             CreateMap<ProductCreateDto, Product>();
             CreateMap<ProductUpdateDto, Product>()
-                       .ForAllMembers(opts => opts.Condition((src, dest, srcProperty) => srcProperty != null));
-
+                        .ForMember(dest => dest.CategoryId, opt => opt.MapFrom((src, dest, destMember, context) => src.CategoryId ?? destMember))
+                        .ForAllMembers(opts => opts.Condition((src, dest, srcProperty) =>
+                        {
+                            Console.WriteLine($"Mapping to {dest.GetType().Name}.{opts.DestinationMember.Name}");
+                            return srcProperty != null;
+                        }));
         }
     }
 }

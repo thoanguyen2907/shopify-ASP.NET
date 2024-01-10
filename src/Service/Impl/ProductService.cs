@@ -61,11 +61,18 @@ namespace Shopify.src.Service.Impl
         public async Task<bool> UpdateOneAsync(Guid id, ProductUpdateDto updateDto)
         {
             var foundProduct = await _productRepo.GetByIdAsync(id);
-            if (foundProduct is null)
+
+            if (foundProduct == null)
             {
                 return false;
             }
-            return await _productRepo.UpdateOneAsync(foundProduct);
+            
+            Console.WriteLine("id " + id);
+            Console.WriteLine("foundProduct " + foundProduct);
+            var mappedProduct =  _mapper.Map(updateDto, foundProduct);
+            Console.WriteLine("mappedProduct " + mappedProduct);
+          
+            return await _productRepo.UpdateOneAsync(mappedProduct);
         }
     }
 }
