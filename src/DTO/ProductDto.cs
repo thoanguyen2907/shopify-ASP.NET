@@ -30,5 +30,9 @@ namespace Shopify.src.DTO
         public double? Price { get; set; }
         public int? Inventory { get; set; }
         public Guid? CategoryId { get; set; }
+          public override string ToString()
+        {
+            return $"Product  Name: {Name}, Description: {Description}, Price: {Price}, Inventory: {Inventory}, CategoryId: {CategoryId}";
+        }
     }
 }

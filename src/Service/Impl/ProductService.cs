@@ -60,19 +60,20 @@ namespace Shopify.src.Service.Impl
 
         public async Task<bool> UpdateOneAsync(Guid id, ProductUpdateDto updateDto)
         {
-            var foundProduct = await _productRepo.GetByIdAsync(id);
-
-            if (foundProduct == null)
+            var foundItem = await _productRepo.GetByIdAsync(id) ?? throw CustomException.NotFound();
+            var properties = updateDto!.GetType().GetProperties();
+            foreach (var p in properties)
             {
-                return false;
+                if(p.GetValue(foundItem) is not null && p.GetValue(updateDto) is null)
+                {
+                    p.SetValue(updateDto, p.GetValue(foundItem));
+                }
             }
-            
-            Console.WriteLine("id " + id);
-            Console.WriteLine("foundProduct " + foundProduct);
-            var mappedProduct =  _mapper.Map(updateDto, foundProduct);
-            Console.WriteLine("mappedProduct " + mappedProduct);
-          
-            return await _productRepo.UpdateOneAsync(mappedProduct);
+            //   var mappedItem = _mapper.Map<ProductUpdateDto, Product>(updateDto);
+            //   Console.WriteLine("foundProduct " + foundProduct);
+            // Console.WriteLine("mappedProduct " + mappedProduct);
+            // Console.WriteLine("mappedItem " + mappedItem);
+            return await _productRepo.UpdateOneAsync(_mapper.Map<ProductUpdateDto, Product>(updateDto));
         }
     }
 }
