@@ -10,7 +10,7 @@ namespace Shopify.src.Controller
 {
     public class AuthController : BaseController
     {
-        private IAuthService _authService; 
+        private IAuthService _authService;
         public AuthController(IAuthService service)
         {
             _authService = service;
