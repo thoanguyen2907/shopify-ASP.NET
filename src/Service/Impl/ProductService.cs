@@ -58,22 +58,42 @@ namespace Shopify.src.Service.Impl
             return _mapper.Map<Product, ProductReadDto>(foundProduct);
         }
 
+        // public async Task<bool> UpdateOneAsync(Guid id, ProductUpdateDto updateDto)
+        // {
+        //     var foundItem = await _productRepo.GetByIdAsync(id) ?? throw CustomException.NotFound();
+        //     var properties = updateDto!.GetType().GetProperties();
+        //     foreach (var p in properties)
+        //     {
+        //         if(p.GetValue(foundItem) is not null && p.GetValue(updateDto) is null)
+        //         {
+        //             p.SetValue(updateDto, p.GetValue(foundItem));
+        //         }
+        //     }
+        //     //   var mappedItem = _mapper.Map<ProductUpdateDto, Product>(updateDto);
+        //     //   Console.WriteLine("foundProduct " + foundProduct);
+        //     // Console.WriteLine("mappedProduct " + mappedProduct);
+        //     // Console.WriteLine("mappedItem " + mappedItem);
+        //     return await _productRepo.UpdateOneAsync(_mapper.Map<ProductUpdateDto, Product>(updateDto));
+        // }
         public async Task<bool> UpdateOneAsync(Guid id, ProductUpdateDto updateDto)
         {
-            var foundItem = await _productRepo.GetByIdAsync(id) ?? throw CustomException.NotFound();
-            var properties = updateDto!.GetType().GetProperties();
-            foreach (var p in properties)
+           var foundProduct = await _productRepo.GetByIdAsync(id);
+
+            if (foundProduct == null)
             {
-                if(p.GetValue(foundItem) is not null && p.GetValue(updateDto) is null)
+                return false;
+            }
+
+            foreach (var property in updateDto.GetType().GetProperties())
+            {
+                if (property.GetValue(updateDto) is null)
                 {
-                    p.SetValue(updateDto, p.GetValue(foundItem));
+                    Console.WriteLine(property.Name);
+                    property.SetValue(updateDto, foundProduct.GetType().GetProperty(property.Name).GetValue(foundProduct));
                 }
             }
-            //   var mappedItem = _mapper.Map<ProductUpdateDto, Product>(updateDto);
-            //   Console.WriteLine("foundProduct " + foundProduct);
-            // Console.WriteLine("mappedProduct " + mappedProduct);
-            // Console.WriteLine("mappedItem " + mappedItem);
-            return await _productRepo.UpdateOneAsync(_mapper.Map<ProductUpdateDto, Product>(updateDto));
+            var mappedProduct = _mapper.Map(updateDto, foundProduct);
+            return await _productRepo.UpdateOneAsync(mappedProduct);
         }
     }
 }
