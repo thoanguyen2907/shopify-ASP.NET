@@ -45,9 +45,9 @@ namespace Shopify.Migrations
                         .HasColumnName("updated_at");
 
                     b.HasKey("Id")
-                        .HasName("pk_category");
+                        .HasName("pk_categories");
 
-                    b.ToTable("category", (string)null);
+                    b.ToTable("categories", (string)null);
                 });
 
             modelBuilder.Entity("Shopify.src.Entity.Product", b =>
@@ -88,12 +88,12 @@ namespace Shopify.Migrations
                         .HasColumnName("updated_at");
 
                     b.HasKey("Id")
-                        .HasName("pk_product");
+                        .HasName("pk_products");
 
                     b.HasIndex("CategoryId")
-                        .HasDatabaseName("ix_product_category_id");
+                        .HasDatabaseName("ix_products_category_id");
 
-                    b.ToTable("product", (string)null);
+                    b.ToTable("products", (string)null);
                 });
 
             modelBuilder.Entity("Shopify.src.Entity.User", b =>
@@ -148,7 +148,7 @@ namespace Shopify.Migrations
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
-                        .HasConstraintName("fk_product_category_category_id");
+                        .HasConstraintName("fk_products_categories_category_id");
 
                     b.Navigation("Category");
                 });

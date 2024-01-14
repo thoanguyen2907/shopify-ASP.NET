@@ -16,7 +16,7 @@ namespace Shopify.Migrations
                 .Annotation("Npgsql:Enum:role", "admin,customer");
 
             migrationBuilder.CreateTable(
-                name: "category",
+                name: "categories",
                 columns: table => new
                 {
                     id = table.Column<Guid>(type: "uuid", nullable: false),
@@ -26,7 +26,7 @@ namespace Shopify.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("pk_category", x => x.id);
+                    table.PrimaryKey("pk_categories", x => x.id);
                 });
 
             migrationBuilder.CreateTable(
@@ -48,7 +48,7 @@ namespace Shopify.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "product",
+                name: "products",
                 columns: table => new
                 {
                     id = table.Column<Guid>(type: "uuid", nullable: false),
@@ -62,18 +62,18 @@ namespace Shopify.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("pk_product", x => x.id);
+                    table.PrimaryKey("pk_products", x => x.id);
                     table.ForeignKey(
-                        name: "fk_product_category_category_id",
+                        name: "fk_products_categories_category_id",
                         column: x => x.category_id,
-                        principalTable: "category",
+                        principalTable: "categories",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "ix_product_category_id",
-                table: "product",
+                name: "ix_products_category_id",
+                table: "products",
                 column: "category_id");
         }
 
@@ -81,13 +81,13 @@ namespace Shopify.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "product");
+                name: "products");
 
             migrationBuilder.DropTable(
                 name: "users");
 
             migrationBuilder.DropTable(
-                name: "category");
+                name: "categories");
         }
     }
 }
