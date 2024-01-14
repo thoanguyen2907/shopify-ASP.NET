@@ -58,23 +58,7 @@ namespace Shopify.src.Service.Impl
             return _mapper.Map<Product, ProductReadDto>(foundProduct);
         }
 
-        // public async Task<bool> UpdateOneAsync(Guid id, ProductUpdateDto updateDto)
-        // {
-        //     var foundItem = await _productRepo.GetByIdAsync(id) ?? throw CustomException.NotFound();
-        //     var properties = updateDto!.GetType().GetProperties();
-        //     foreach (var p in properties)
-        //     {
-        //         if(p.GetValue(foundItem) is not null && p.GetValue(updateDto) is null)
-        //         {
-        //             p.SetValue(updateDto, p.GetValue(foundItem));
-        //         }
-        //     }
-        //     //   var mappedItem = _mapper.Map<ProductUpdateDto, Product>(updateDto);
-        //     //   Console.WriteLine("foundProduct " + foundProduct);
-        //     // Console.WriteLine("mappedProduct " + mappedProduct);
-        //     // Console.WriteLine("mappedItem " + mappedItem);
-        //     return await _productRepo.UpdateOneAsync(_mapper.Map<ProductUpdateDto, Product>(updateDto));
-        // }
+        
         public async Task<bool> UpdateOneAsync(Guid id, ProductUpdateDto updateDto)
         {
            var foundProduct = await _productRepo.GetByIdAsync(id);
@@ -88,7 +72,6 @@ namespace Shopify.src.Service.Impl
             {
                 if (property.GetValue(updateDto) is null)
                 {
-                    Console.WriteLine(property.Name);
                     property.SetValue(updateDto, foundProduct.GetType().GetProperty(property.Name).GetValue(foundProduct));
                 }
             }

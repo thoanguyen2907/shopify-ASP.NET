@@ -44,7 +44,7 @@ namespace Shopify.src.Controller
             var deleted = await _productService.DeleteOneAsync(id);
             return Ok(deleted);
         }
-        
+
         [HttpPatch("{id:guid}")]
         public async Task<ActionResult<bool>> UpdateOneAsync([FromRoute] Guid id, [FromBody] ProductUpdateDto updateDto)
         {
