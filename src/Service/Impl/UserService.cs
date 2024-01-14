@@ -23,7 +23,14 @@ namespace Shopify.src.Service.Impl
         }
         public async Task<UserReadDto> CreateOneAsync(UserCreateDto createDto)
         {
+            // var user = _mapper.Map<UserCreateDto, User>(createDto);
+            // user.Role = Role.Customer;
+            // var savedUser = await _userRepo.CreateOneAsync(user);
+            // return _mapper.Map<User, UserReadDto>(savedUser);
+            PasswordService.HashPassword(createDto.Password, out string hashedPassword, out byte[] salt);
             var user = _mapper.Map<UserCreateDto, User>(createDto);
+            user.Password = hashedPassword; 
+            user.Salt = salt;
             user.Role = Role.Customer;
             var savedUser = await _userRepo.CreateOneAsync(user);
             return _mapper.Map<User, UserReadDto>(savedUser);

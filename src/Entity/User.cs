@@ -16,6 +16,7 @@ namespace Shopify.src.Entity
         [Required]
         public string Password { get; set; }
         public Role Role { get; set; }
+        public byte[] Salt { get; set; }
     }
     [JsonConverter(typeof(JsonStringEnumConverter))]
     public enum Role
