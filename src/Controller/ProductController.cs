@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Shopify.src.DTO;
 using Shopify.src.Service;
@@ -25,6 +26,7 @@ namespace Shopify.src.Controller
         }
 
         [HttpGet()]
+        [Authorize]
         public async Task<ActionResult<IEnumerable<ProductReadDto>>> GetAllAsync([FromQuery] GetAllOptions getAllOptions)
         {
             var productList = await _productService.GetAllAsync(getAllOptions);

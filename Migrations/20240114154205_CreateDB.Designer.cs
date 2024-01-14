@@ -13,8 +13,8 @@ using Shopify.src.Entity;
 namespace Shopify.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20240105113900_UserSalt")]
-    partial class UserSalt
+    [Migration("20240114154205_CreateDB")]
+    partial class CreateDB
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

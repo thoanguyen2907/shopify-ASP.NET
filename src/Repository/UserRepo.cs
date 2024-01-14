@@ -37,7 +37,7 @@ namespace Shopify.src.Repository
 
         public async Task<User?> FindByEmailAsync(string email)
         {
-            var user = await _users.FindAsync(email);
+            var user = await _users.AsNoTracking().FirstOrDefaultAsync(u => u.Email == email);
             return user;
         }
 

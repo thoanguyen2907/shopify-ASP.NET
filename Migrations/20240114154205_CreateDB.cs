@@ -7,7 +7,7 @@ using Shopify.src.Entity;
 namespace Shopify.Migrations
 {
     /// <inheritdoc />
-    public partial class UserSalt : Migration
+    public partial class CreateDB : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
