@@ -17,10 +17,16 @@ namespace Shopify.src.Controller
             _userService = userService;
         }
 
-        [HttpPost()]
+        [HttpPost("/register")]
         public async Task<ActionResult<UserReadDto>> CreateOneAsync([FromBody] UserCreateDto userCreateDto)
         {
             var user = await _userService.CreateOneAsync(userCreateDto);
+            return Ok(user);
+        }
+        [HttpPost("/create-admin")]
+        public async Task<ActionResult<UserReadDto>> CreateAdminAsync([FromBody] UserCreateDto userCreateDto)
+        {
+            var user = await _userService.CreateAdminAsync(userCreateDto);
             return Ok(user);
         }
 
