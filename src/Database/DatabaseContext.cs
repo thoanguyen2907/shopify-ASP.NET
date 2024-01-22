@@ -14,6 +14,8 @@ namespace Shopify.src.Database
         public DbSet<User> Users { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Product> Products { get; set; }
+        public DbSet<Order> Orders { get; set; }
+        public DbSet<OrderDetail> OrderDetail { get; set; }
         static DatabaseContext()
         {
             AppContext.SetSwitch("Npgsql.DisableDateTimeInfinityConversions", true);
@@ -33,12 +35,22 @@ namespace Shopify.src.Database
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.HasPostgresEnum<Role>();
+
             // one to many : Product - Category
             modelBuilder.Entity<Product>()
                 .HasOne(p => p.Category)
                 .WithMany(c => c.Products)
                 .HasForeignKey(p => p.CategoryId)
                 .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<OrderDetail>().HasKey("ProductId", "OrderId");
+
+            // Order - User relationship 
+            modelBuilder.Entity<Order>()
+            .HasOne(o => o.User)
+            .WithMany(u => u.Orders)
+            .HasForeignKey(o => o.UserId)
+            .OnDelete(DeleteBehavior.Cascade); 
         }
     }
 }
