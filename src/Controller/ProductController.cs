@@ -31,10 +31,8 @@ namespace Shopify.src.Controller
         public async Task<ActionResult<IEnumerable<ProductReadDto>>> GetAllAsync([FromQuery] GetAllOptions getAllOptions)
         {
             var authenticatedClaims = HttpContext.User;
-            Console.WriteLine($"authenticatedClaims {authenticatedClaims}");
             var userId = authenticatedClaims.FindFirst(c => c.Type == ClaimTypes.NameIdentifier)!.Value;
         
-           Console.WriteLine($"User ID: {userId}");
             var productList = await _productService.GetAllAsync(getAllOptions);
             return Ok(productList);
         }

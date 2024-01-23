@@ -14,6 +14,6 @@ namespace Shopify.src.DTO
     {
         public Guid UserId { get; set; }
         public User User { get; set; }
-        public IEnumerable<OrderDetailReadDto> OrderDetails {get; set;}
+        public IEnumerable<OrderDetailReadDto> OrderDetails { get; set; }
     }
 }

@@ -61,13 +61,15 @@ builder.Services
     .AddScoped<IProductService, ProductService>()
     .AddScoped<IAuthService, AuthService>()
     .AddScoped<ITokenService, TokenService>()
-    .AddScoped<IOrderService, OrderService>();
+    .AddScoped<IOrderService, OrderService>()
+    .AddScoped<IOrderDetailService, OrderDetailService>();
 
 builder.Services
     .AddScoped<IUserRepo, UserRepo>()
     .AddScoped<ICategoryRepo, CategoryRepo>()
     .AddScoped<IProductRepo, ProductRepo>()
-    .AddScoped<IOrderRepo, OrderRepo>();
+    .AddScoped<IOrderRepo, OrderRepo>()
+    .AddScoped<IOrderDetailRepo, OrderDetailRepo>();
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(
     options =>

@@ -21,7 +21,6 @@ namespace Shopify.src.Service.Impl
         }
         public async Task<OrderReadDto> CreateOneAsync(Guid UserId, OrderCreateDto createDto)
         {
-            Console.WriteLine($"this is user id in order service {UserId}");
             var order = _mapper.Map<OrderCreateDto, Order>(createDto);
             order.UserId = UserId;
             await _orderRepo.CreateOneAsync(order);

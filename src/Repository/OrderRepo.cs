@@ -43,11 +43,8 @@ namespace Shopify.src.Repository
                         }
                         else
                         {
-                            // assign order id to order detail order id 
-                            // assign user Id to userId of detail => context
-                            // allow to use only in controller 
-                            // var authenticatedClaims = HttpContext.User;
-                            // order.UserId = UserId; 
+                            foundProduct.Inventory -= detail.Quantity;
+                            await _databaseContext.SaveChangesAsync();
                             await _orderDetails.AddAsync(detail);
                         }
 
