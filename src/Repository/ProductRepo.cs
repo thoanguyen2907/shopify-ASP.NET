@@ -43,8 +43,20 @@ namespace Shopify.src.Repository
 
         public async Task<IEnumerable<Product>> GetAllAsync(GetAllOptions getAllOptions)
         {
-            return await _products.Include(p => p.Category).Skip(getAllOptions.Offset).Take(getAllOptions.Limit).ToArrayAsync();
+            if (getAllOptions.Search is null)
+            {
+                return await _products.Include(p => p.Category).Skip(getAllOptions.Offset).Take(getAllOptions.Limit).ToArrayAsync();
+            }
+            else
+            {
+                return await _products
+                        .Where(p => p.Name.Contains(getAllOptions.Search))
+                        .Include(p => p.Category)
+                        .Skip(getAllOptions.Offset)
+                        .Take(getAllOptions.Limit).ToArrayAsync();
+            }
         }
+
 
         public async Task<Product?> GetByIdAsync(Guid id)
         {

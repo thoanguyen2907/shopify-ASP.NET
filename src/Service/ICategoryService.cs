@@ -12,7 +12,7 @@ namespace Shopify.src.Service
         Task<CategoryReadDto> CreateOneAsync(CategoryCreateDto createDto);
         Task<bool> DeleteOneAsync(Guid id);
         Task<IEnumerable<CategoryReadDto>> GetAllAsync(GetAllOptions getAllOptions);
-        Task<CategoryReadDto> GetByIdAsync(Guid id);
+        Task<CategoryReadDto> GetByIdAsync(Guid id);  
         Task<bool> UpdateOneAsync(Guid id, CategoryUpdateDto updateDto);
     }
 }

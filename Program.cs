@@ -9,6 +9,11 @@ using Shopify.src.Entity;
 using Shopify.src.Abstraction;
 using Shopify.src.Repository;
 using Shopify.src.Shared;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using System.Text;
+using Swashbuckle.AspNetCore.Filters;
+using Shopify.src.Middleware;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -16,7 +21,21 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.Configure<RouteOptions>(options => options.LowercaseUrls = true);
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(
+     options =>
+    {
+        options.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
+        {
+            Description = "Bearer token authentication",
+            Name = "Authorization",
+            In = ParameterLocation.Header,
+            Scheme = "Bearer"
+        }
+        );
+
+        options.OperationFilter<SecurityRequirementsOperationFilter>();
+    }
+);
 
 // add controllers
 builder.Services.AddControllers();
@@ -35,17 +54,56 @@ builder.Services.AddDbContext<DatabaseContext>(options =>
 // add automapper service
 builder.Services.AddAutoMapper(typeof(MapperProfile).Assembly);
 
-// add DI services
+builder.Services.AddScoped<ExceptionHandlerMiddleware>();
 
+// add DI services
 builder.Services
     .AddScoped<IUserService, UserService>()
     .AddScoped<ICategoryService, CategoryService>()
-    .AddScoped<IProductService, ProductService>();
+    .AddScoped<IProductService, ProductService>()
+    .AddScoped<IAuthService, AuthService>()
+    .AddScoped<ITokenService, TokenService>()
+    .AddScoped<IOrderService, OrderService>()
+    .AddScoped<IOrderDetailService, OrderDetailService>();
 
 builder.Services
     .AddScoped<IUserRepo, UserRepo>()
     .AddScoped<ICategoryRepo, CategoryRepo>()
-    .AddScoped<IProductRepo, ProductRepo>();
+    .AddScoped<IProductRepo, ProductRepo>()
+    .AddScoped<IOrderRepo, OrderRepo>()
+    .AddScoped<IOrderDetailRepo, OrderDetailRepo>();
+
+var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: MyAllowSpecificOrigins,
+                      policy =>
+                      {
+                          policy.WithOrigins("http://localhost:3000")
+                          .AllowAnyHeader()
+                          .AllowAnyMethod()
+                          .AllowCredentials();
+                      });
+});
+
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(
+    options =>
+    {
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidIssuer = builder.Configuration["Jwt:Issuer"],
+            ValidAudience = builder.Configuration["Jwt:Audience"],
+            IssuerSigningKey = new SymmetricSecurityKey
+            (Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]!)),
+            ValidateIssuer = true,
+            ValidateAudience = true,
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = true
+        };
+    }
+);
+
+builder.Services.AddAuthorization();
 
 // app build 
 var app = builder.Build();
@@ -57,11 +115,16 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
-
 // Add middlewares
+app.UseCors(MyAllowSpecificOrigins);
+
+app.UseMiddleware<ExceptionHandlerMiddleware>();
 app.UseHttpsRedirection();
+app.UseAuthentication();
+app.UseAuthorization();
+
 app.MapControllers();
+
 app.Run();
 
 

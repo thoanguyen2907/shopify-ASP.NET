@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Shopify.src.DTO;
 using Shopify.src.Service;
@@ -12,14 +14,17 @@ namespace Shopify.src.Controller
     public class ProductController : BaseController
     {
         protected readonly IProductService _productService;
-        public ProductController(IProductService service)
+        private readonly IConfiguration _config;
+        public ProductController(IProductService service, IConfiguration config)
         {
             _productService = service;
+            _config = config;
         }
 
         [HttpPost()]
         public async Task<ActionResult<ProductReadDto>> CreateOneAsync([FromBody] ProductCreateDto createDto)
         {
+
             var product = await _productService.CreateOneAsync(createDto);
             return Ok(product);
         }
@@ -27,6 +32,9 @@ namespace Shopify.src.Controller
         [HttpGet()]
         public async Task<ActionResult<IEnumerable<ProductReadDto>>> GetAllAsync([FromQuery] GetAllOptions getAllOptions)
         {
+            // var authenticatedClaims = HttpContext.User;
+            // var userId = authenticatedClaims.FindFirst(c => c.Type == ClaimTypes.NameIdentifier)!.Value;
+
             var productList = await _productService.GetAllAsync(getAllOptions);
             return Ok(productList);
         }

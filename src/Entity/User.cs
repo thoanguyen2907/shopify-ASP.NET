@@ -13,9 +13,11 @@ namespace Shopify.src.Entity
         public string Name { get; set; }
         [Required, EmailAddress]
         public string Email { get; set; }
-        [Required]
         public string Password { get; set; }
         public Role Role { get; set; }
+        public byte[] Salt { get; set; }
+        public bool IsOauth { get; set; }
+        public ICollection<Order> Orders { get; set; }
     }
     [JsonConverter(typeof(JsonStringEnumConverter))]
     public enum Role

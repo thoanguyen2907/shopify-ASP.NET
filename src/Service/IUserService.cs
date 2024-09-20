@@ -10,6 +10,7 @@ namespace Shopify.src.Service
     public interface IUserService
     {
         Task<UserReadDto> CreateOneAsync(UserCreateDto createDto);
+        Task<UserReadDto> CreateAdminAsync(UserCreateDto createDto);
         Task<bool> DeleteOneAsync(Guid id);
         Task<IEnumerable<UserReadDto>> GetAllAsync(GetAllOptions getAllOptions);
         Task<UserReadDto> GetByIdAsync(Guid id);

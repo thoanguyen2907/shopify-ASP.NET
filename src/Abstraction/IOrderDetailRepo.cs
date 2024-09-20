@@ -6,8 +6,8 @@ using Shopify.src.Entity;
 
 namespace Shopify.src.Abstraction
 {
-    public interface IUserRepo : IBaseRepo<User>
+    public interface IOrderDetailRepo : IBaseRepo<OrderDetail>
     {
-        Task<User?> FindByEmailAsync(string email);
+
     }
 }

@@ -4,10 +4,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using Shopify.src.Entity;
 
-namespace Shopify.src.Abstraction
+namespace Shopify.src.Service
 {
-    public interface IUserRepo : IBaseRepo<User>
+    public interface ITokenService
     {
-        Task<User?> FindByEmailAsync(string email);
+        string GenerateToken(User user);
     }
 }
