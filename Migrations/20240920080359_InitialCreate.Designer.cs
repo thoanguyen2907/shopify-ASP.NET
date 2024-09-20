@@ -13,8 +13,8 @@ using Shopify.src.Entity;
 namespace Shopify.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20240122110513_CreateOrder")]
-    partial class CreateOrder
+    [Migration("20240920080359_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -178,6 +178,10 @@ namespace Shopify.Migrations
                         .HasColumnType("text")
                         .HasColumnName("email");
 
+                    b.Property<bool>("IsOauth")
+                        .HasColumnType("boolean")
+                        .HasColumnName("is_oauth");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("text")
@@ -210,7 +214,7 @@ namespace Shopify.Migrations
             modelBuilder.Entity("Shopify.src.Entity.Order", b =>
                 {
                     b.HasOne("Shopify.src.Entity.User", "User")
-                        .WithMany()
+                        .WithMany("Orders")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
@@ -221,23 +225,23 @@ namespace Shopify.Migrations
 
             modelBuilder.Entity("Shopify.src.Entity.OrderDetail", b =>
                 {
-                    b.HasOne("Shopify.src.Entity.Order", "order")
+                    b.HasOne("Shopify.src.Entity.Order", "Order")
                         .WithMany("OrderDetails")
                         .HasForeignKey("OrderId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
                         .HasConstraintName("fk_order_detail_orders_order_id");
 
-                    b.HasOne("Shopify.src.Entity.Product", "product")
+                    b.HasOne("Shopify.src.Entity.Product", "Product")
                         .WithMany()
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
                         .HasConstraintName("fk_order_detail_products_product_id");
 
-                    b.Navigation("order");
+                    b.Navigation("Order");
 
-                    b.Navigation("product");
+                    b.Navigation("Product");
                 });
 
             modelBuilder.Entity("Shopify.src.Entity.Product", b =>
@@ -260,6 +264,11 @@ namespace Shopify.Migrations
             modelBuilder.Entity("Shopify.src.Entity.Order", b =>
                 {
                     b.Navigation("OrderDetails");
+                });
+
+            modelBuilder.Entity("Shopify.src.Entity.User", b =>
+                {
+                    b.Navigation("Orders");
                 });
 #pragma warning restore 612, 618
         }

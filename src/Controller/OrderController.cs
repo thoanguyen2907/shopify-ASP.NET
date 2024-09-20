@@ -23,7 +23,7 @@ namespace Shopify.src.Controller
         [Authorize]
         public async Task<ActionResult<OrderReadDto>> CreateOneAsync([FromBody] OrderCreateDto orderCreateDto)
         {
-            ;
+    
             var authenticatedClaims = HttpContext.User;
             var userId = authenticatedClaims.FindFirst(c => c.Type == ClaimTypes.NameIdentifier)!.Value;
             var userGuid = new Guid(userId);

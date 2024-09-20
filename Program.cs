@@ -13,6 +13,7 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using System.Text;
 using Swashbuckle.AspNetCore.Filters;
+using Shopify.src.Middleware;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -53,8 +54,9 @@ builder.Services.AddDbContext<DatabaseContext>(options =>
 // add automapper service
 builder.Services.AddAutoMapper(typeof(MapperProfile).Assembly);
 
-// add DI services
+builder.Services.AddScoped<ExceptionHandlerMiddleware>();
 
+// add DI services
 builder.Services
     .AddScoped<IUserService, UserService>()
     .AddScoped<ICategoryService, CategoryService>()
@@ -70,6 +72,19 @@ builder.Services
     .AddScoped<IProductRepo, ProductRepo>()
     .AddScoped<IOrderRepo, OrderRepo>()
     .AddScoped<IOrderDetailRepo, OrderDetailRepo>();
+
+var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: MyAllowSpecificOrigins,
+                      policy =>
+                      {
+                          policy.WithOrigins("http://localhost:3000")
+                          .AllowAnyHeader()
+                          .AllowAnyMethod()
+                          .AllowCredentials();
+                      });
+});
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(
     options =>
@@ -88,6 +103,8 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
     }
 );
 
+builder.Services.AddAuthorization();
+
 // app build 
 var app = builder.Build();
 
@@ -98,12 +115,14 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
-
 // Add middlewares
+app.UseCors(MyAllowSpecificOrigins);
+
+app.UseMiddleware<ExceptionHandlerMiddleware>();
 app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
+
 app.MapControllers();
 
 app.Run();

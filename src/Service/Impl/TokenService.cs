@@ -33,7 +33,7 @@ namespace Shopify.src.Service.Impl
             {
                 Issuer = issuer,
                 Audience = audience,
-                Expires = DateTime.Now.AddDays(2),
+                Expires = DateTime.Now.AddMinutes(60),
                 Subject = new ClaimsIdentity(claims),
                 SigningCredentials = signingKey
             };
