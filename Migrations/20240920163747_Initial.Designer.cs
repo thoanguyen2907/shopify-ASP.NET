@@ -13,8 +13,8 @@ using Shopify.src.Entity;
 namespace Shopify.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20240920080359_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20240920163747_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -177,6 +177,11 @@ namespace Shopify.Migrations
                         .IsRequired()
                         .HasColumnType("text")
                         .HasColumnName("email");
+
+                    b.Property<string>("Image")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("image");
 
                     b.Property<bool>("IsOauth")
                         .HasColumnType("boolean")

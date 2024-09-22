@@ -18,8 +18,9 @@ namespace Shopify.src.Controller
         }
 
         [HttpPost("/register")]
-        public async Task<ActionResult<UserReadDto>> CreateOneAsync([FromBody] UserCreateDto userCreateDto)
+        public async Task<ActionResult<UserReadDto>> CreateOneAsync([FromForm] UserCreateDto userCreateDto)
         {
+            System.Console.WriteLine($"user data {userCreateDto}");
             var user = await _userService.CreateOneAsync(userCreateDto);
             return Ok(user);
         }

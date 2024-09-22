@@ -175,6 +175,11 @@ namespace Shopify.Migrations
                         .HasColumnType("text")
                         .HasColumnName("email");
 
+                    b.Property<string>("Image")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("image");
+
                     b.Property<bool>("IsOauth")
                         .HasColumnType("boolean")
                         .HasColumnName("is_oauth");

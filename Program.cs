@@ -14,6 +14,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using System.Text;
 using Swashbuckle.AspNetCore.Filters;
 using Shopify.src.Middleware;
+using CloudinaryDotNet;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -73,7 +74,15 @@ builder.Services
     .AddScoped<IOrderRepo, OrderRepo>()
     .AddScoped<IOrderDetailRepo, OrderDetailRepo>();
 
+builder.Services.AddScoped(x =>
+{
+    var cloudinaryUrl = builder.Configuration["Cloudinary:CLOUDINARY_URL"];
+    return new Cloudinary(cloudinaryUrl);
+}
+);
+
 var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+
 builder.Services.AddCors(options =>
 {
     options.AddPolicy(name: MyAllowSpecificOrigins,

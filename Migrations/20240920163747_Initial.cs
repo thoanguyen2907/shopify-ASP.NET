@@ -7,7 +7,7 @@ using Shopify.src.Entity;
 namespace Shopify.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class Initial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -40,6 +40,7 @@ namespace Shopify.Migrations
                     role = table.Column<Role>(type: "role", nullable: false),
                     salt = table.Column<byte[]>(type: "bytea", nullable: false),
                     is_oauth = table.Column<bool>(type: "boolean", nullable: false),
+                    image = table.Column<string>(type: "text", nullable: false),
                     created_at = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
                     updated_at = table.Column<DateTime>(type: "timestamp without time zone", nullable: false)
                 },
