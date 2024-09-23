@@ -36,21 +36,12 @@ namespace Shopify.src.Database
         {
             modelBuilder.HasPostgresEnum<Role>();
 
-            // one to many : Product - Category
-            modelBuilder.Entity<Product>()
-                .HasOne(p => p.Category)
-                .WithMany(c => c.Products)
-                .HasForeignKey(p => p.CategoryId)
-                .OnDelete(DeleteBehavior.Cascade);
+            /* Seeding the database */
+            modelBuilder.Entity<User>().HasData(SeedingData.GetUsers());
+            modelBuilder.Entity<Category>().HasData(SeedingData.GetCategories());
+            modelBuilder.Entity<Product>().HasData(SeedingData.GetProducts());
 
-            modelBuilder.Entity<OrderDetail>().HasKey("ProductId", "OrderId");
 
-            // Order - User relationship 
-            modelBuilder.Entity<Order>()
-            .HasOne(o => o.User)
-            .WithMany(u => u.Orders)
-            .HasForeignKey(o => o.UserId)
-            .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }
